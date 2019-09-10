@@ -3,14 +3,18 @@ import os
 import time
 import sys
 
-import requests
+def Set_List(Hash_list, Crypto_Wealth_list, Parameters):
+    if Parameters['StaticOrNot'] == 0
+        for i in range(Parameters['NodeSize'])
+            Hash_list += RandomDisGen(Parameters)
+            Crypto_Wealth_list += 0
 
-def Set_List():
+def Mining(Hash_list, Crypto_Wealth_list, Parameters):
 
-def Mining():
+def Investment(Hash_list, Crypto_Wealth_list, Parameters):
 
-def Investment():
+def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
 
-def Reinvestment():
+def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
 
-def FilePrint():
+def RandomDisGen(Parameters):

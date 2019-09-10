@@ -1,11 +1,9 @@
 #import section
 import sys
 
-from concurrent import futures
+#from concurrent import futures
 
 from Functions import Set_List, Mining, Investment, Reinvestment, FilePrint()
-
-MAX_WORKERS = 20
 
 #define functions
 def set_parameter(Parameters):
@@ -21,17 +19,17 @@ def set_parameter(Parameters):
 
 def processing(Hash_list, Crypto_Wealth_list, Parameters):
     """Call Set_List function, Mining function, Investment function, Reinvestment function, and fileIO function"""
-    Set_List()
-    Mining()
-    Investment()
-    Reinvestment()
 
-    FilePrint()
+    Set_List(Hash_list, Crypto_Wealth_list, Parameters)
+    Mining(Hash_list, Crypto_Wealth_list, Parameters)
+    Investment(Hash_list, Crypto_Wealth_list, Parameters)
+    Reinvestment(Hash_list, Crypto_Wealth_list, Parameters)
 
-#Main function
+    FilePrint(Hash_list, Crypto_Wealth_list, Parameters)
+
 if __name__ == '__main__':
-    #define dictionary for parameters
 
+    #define dictionary for parameters
     Parameters = {'Repeat': 0, 'StaticOrNot' : 0,
     'DistributionFormat': 0, 'InitialParameter': 0, 'NodeSize': 0,
     'ProcessingNumber': 0, 'ReinvestmentParameter': 0}
