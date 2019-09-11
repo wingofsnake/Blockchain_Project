@@ -18,7 +18,8 @@ def set_parameter(Parameters):
     Parameters['ReinvestmentParameter'] = int(sys.argv[7])
 
 def processing(Hash_list, Crypto_Wealth_list, Parameters):
-    """Call Set_List function, Mining function, Investment function, Reinvestment function, and fileIO function"""
+    """Call Set_List function, Mining function, Investment function,
+    Reinvestment function, and fileIO function"""
 
     Set_List(Hash_list, Crypto_Wealth_list, Parameters)
     Mining(Hash_list, Crypto_Wealth_list, Parameters)
