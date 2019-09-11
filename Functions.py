@@ -39,7 +39,11 @@ def RandomDisGen(Parameters):
         return RandomPow(Parameters, Power_Parameters)
 
 def RandomExp(Parameters, Exponential_Parameters):
-    pass
+    UncheckedChance = random.uniform(0,1)
+    while (UncheckedChance == 0 or UncheckedChance == 1)
+        UncheckedChance = random.uniform(0,1)
+
+    return (-1 / Exponential_Parameters[Parameters['InitialParameter']]) * log(1 - UncheckedChance)
 
 def RandomPow(Parameters, Power_Parameters):
     pass
