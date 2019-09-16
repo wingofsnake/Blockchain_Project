@@ -3,7 +3,7 @@ import sys
 
 #from concurrent import futures
 
-from Functions import Set_List, Mining, Investment, Reinvestment, FilePrint()
+from Functions import Set_List, Mining, Investment, Reinvestment, FilePrint
 
 #define functions
 def set_parameter(Parameters):
@@ -31,16 +31,23 @@ def processing(Hash_list, Crypto_Wealth_list, Parameters):
 if __name__ == '__main__':
 
     #define dictionary for parameters
-    Parameters = {'Repeat': 0, 'StaticOrNot' : 0,
+    Parameters = {'Repeat': 1, 'StaticOrNot': 0,
     'DistributionFormat': 0, 'InitialParameter': 0, 'NodeSize': 0,
     'ProcessingNumber': 0, 'ReinvestmentParameter': 0}
 
     set_parameter(Parameters)
+    print(Parameters)
 
     #define main two variables
     Hash_list = list()
     Crypto_Wealth_list = list()
 
-    processing(Hash_list, Crypto_Wealth_list, Parameters)
+    #processing(Hash_list, Crypto_Wealth_list, Parameters)
+
+    Set_List(Hash_list, Crypto_Wealth_list, Parameters)
+    Mining(Hash_list, Crypto_Wealth_list, Parameters)
+    print(Hash_list)
+    print(Crypto_Wealth_list)
+
 
 
