@@ -16,7 +16,7 @@ def Set_List(Hash_list, Crypto_Wealth_list, Parameters):
         Print("Static or Not parameters should be 0 or 1")
 
 def Mining(Hash_list, Crypto_Wealth_list, Parameters):
-    "Decide which node will success mining, and get reward"
+    """Decide which node will success mining, and get reward"""
     total = 0
     for i in range(Parameters['NodeSize']) :
         total += Hash_list[i]
@@ -30,6 +30,7 @@ def Mining(Hash_list, Crypto_Wealth_list, Parameters):
             break
 
 def Investment(Hash_list, Crypto_Wealth_list, Parameters):
+    """Decide new node enter the system"""
     if Parameters['StaticOrNot'] == 0 :
         for i in range(Parameters['NodeSize']) :
             if Hash_list[i] == 0 :
