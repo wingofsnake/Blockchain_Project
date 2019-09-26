@@ -62,7 +62,16 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
                 Crypto_Wealth_list[i] -= reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
             else :
                 cost_list += [0]
+        
+        
+        temp = 0
+        multi = 1.0 / (len(Hash_list) - 1)
+        for i in len(Hash_list) :
+            temp += cost_list[i]
 
+        for i in len(Hash_list) :
+            cost_list[i] = (temp - cost_list[i]) * multi
+            Crypto_Wealth_list[i] += cost_list[i]
 
 
 def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
@@ -84,6 +93,7 @@ def RandomDisGen(Parameters):
         print("Distribution Format should be 0 to 2")
 
 def RandomExp(Parameters, Exponential_Parameters):
+    """Create random number that follow exp distribution"""
     UncheckedChance = random.uniform(0,1)
     while (UncheckedChance == 0 or UncheckedChance == 1) :
         UncheckedChance = random.uniform(0,1)
@@ -91,6 +101,7 @@ def RandomExp(Parameters, Exponential_Parameters):
     return (-1 / Exponential_Parameters[Parameters['InitialParameter']]) * log(1 - UncheckedChance)
 
 def RandomPow(Parameters, Power_Parameters):
+    """Create random number that follow Power distribution"""
     UncheckedChance = random.uniform(0,1)
     while (UncheckedChance == 0 or UncheckedChance == 1) :
         UncheckedChance = random.uniform(0,1)
