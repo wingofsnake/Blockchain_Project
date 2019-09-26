@@ -42,7 +42,28 @@ def Investment(Hash_list, Crypto_Wealth_list, Parameters):
             Crypto_Wealth_list += [0]
 
 def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
-    pass
+    """Decide each node reinvest to their hash power and make distribution of wealth"""
+    if len(Hash_list) > 1 :
+        cost_list = list()
+        reinvestment_ratio_list = [0.0001, 0.001, 0.00125, 0.0025, 0.005, 0.0075,]
+            0.00875, 0.01, 0.0125, 0.025, 0.05, 0.075, 0.0875, 0.1, 0.5]
+
+        maximum_wealth = 0
+        for i in len(Hash_list) :
+            if maximum_wealth < Crypto_Wealth_list[i]
+                maximum_wealth = Crypto_Wealth_list[i]
+
+        reinvestment_chance = 0
+        for i in len(Hash_list) :
+            reinvestment_chance = random.uniform(0,1)
+            if reinvestment_chance <= (Crypto_Wealth_list[i] / maximum_wealth) :
+                Hash_list[i] += reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
+                cost_list += [reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]]
+                Crypto_Wealth_list[i] -= reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
+            else :
+                cost_list += [0]
+
+
 
 def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
     pass
