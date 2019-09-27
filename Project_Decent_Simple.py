@@ -1,7 +1,7 @@
 #import section
 import sys
 
-#from concurrent import futures
+from multiprocessing import Process
 
 from Functions import Set_List, Mining, Investment, Reinvestment, FilePrint
 
@@ -15,7 +15,7 @@ def set_parameter(Parameters):
     Parameters['InitialParameter'] = int(sys.argv[4])
     Parameters['NodeSize'] = int(sys.argv[5])
     Parameters['ProcessingNumber'] = int(sys.argv[6])
-    Parameters['ReinvestmentParameter'] = int(sys.argv[7])
+    Parameters['ReinvestmentParameter'] = 15
 
 def processing(Hash_list, Crypto_Wealth_list, Parameters):
     """Call Set_List function, Mining function, Investment function,
@@ -25,6 +25,7 @@ def processing(Hash_list, Crypto_Wealth_list, Parameters):
     Mining(Hash_list, Crypto_Wealth_list, Parameters)
     Investment(Hash_list, Crypto_Wealth_list, Parameters)
     Reinvestment(Hash_list, Crypto_Wealth_list, Parameters)
+
 
     FilePrint(Hash_list, Crypto_Wealth_list, Parameters)
 
@@ -42,12 +43,16 @@ if __name__ == '__main__':
     Hash_list = list()
     Crypto_Wealth_list = list()
 
+
+
     #processing(Hash_list, Crypto_Wealth_list, Parameters)
 
-    Set_List(Hash_list, Crypto_Wealth_list, Parameters)
-    Mining(Hash_list, Crypto_Wealth_list, Parameters)
-    print(Hash_list)
-    print(Crypto_Wealth_list)
+
+    #Hash_list.sort(reverse=True)
+    #Crypto_Wealth_list.sort(reverse=True)
+
+
+
 
 
 

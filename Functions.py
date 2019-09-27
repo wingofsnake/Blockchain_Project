@@ -2,6 +2,8 @@ import random
 import os
 import time
 import sys
+import csv
+import math
 
 def Set_List(Hash_list, Crypto_Wealth_list, Parameters):
     """Initialize Hash and Wealth lists with input parameters"""
@@ -45,16 +47,16 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
     """Decide each node reinvest to their hash power and make distribution of wealth"""
     if len(Hash_list) > 1 :
         cost_list = list()
-        reinvestment_ratio_list = [0.0001, 0.001, 0.00125, 0.0025, 0.005, 0.0075,]
+        reinvestment_ratio_list = [0.0001, 0.001, 0.00125, 0.0025, 0.005, 0.0075,
             0.00875, 0.01, 0.0125, 0.025, 0.05, 0.075, 0.0875, 0.1, 0.5]
 
         maximum_wealth = 0
-        for i in len(Hash_list) :
-            if maximum_wealth < Crypto_Wealth_list[i]
+        for i in range(len(Hash_list)) :
+            if maximum_wealth < Crypto_Wealth_list[i] :
                 maximum_wealth = Crypto_Wealth_list[i]
 
         reinvestment_chance = 0
-        for i in len(Hash_list) :
+        for i in range(len(Hash_list)) :
             reinvestment_chance = random.uniform(0,1)
             if reinvestment_chance <= (Crypto_Wealth_list[i] / maximum_wealth) :
                 Hash_list[i] += reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
@@ -66,16 +68,46 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
         
         temp = 0
         multi = 1.0 / (len(Hash_list) - 1)
-        for i in len(Hash_list) :
+        for i in range(len(Hash_list)) :
             temp += cost_list[i]
 
-        for i in len(Hash_list) :
+        for i in range(len(Hash_list)) :
             cost_list[i] = (temp - cost_list[i]) * multi
             Crypto_Wealth_list[i] += cost_list[i]
 
 
 def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
-    pass
+    """Print out CSV file of hash power and crypto-currency"""
+
+    filename_hash = str(Parameters['Repeat']) + 'h' + 'di' + str(Parameters['DistributionFormat']) + 'dp' + str(Parameters['InitialParameter']) + 's' + str(Parameters['NodeSize']) + 'n' + str(Parameters['ProcessingNumber']) + 'G' + str(Parameters['StaticOrNot']) + 're' + str(Parameters['ReinvestmentParameter']) + '.csv'
+    fileout_hash = open(filename_hash, 'w')
+    wrh = csv.writer(fileout_hash)
+    wrh.writerow(['Hash', 'Accumulated frequency'])
+
+    ach = 0
+    for i in range(len(Hash_list) - 1) :
+        ach += 1
+        if Hash_list[i+1] < Hash_list[i] :
+            wrh.writerow([Hash_list[i], ach])
+
+    ach += 1
+    wrh.writerow([Hash_list[Parameters['NodeSize'] - 1], ach])
+    fileout_hash.close()
+
+    filename_crypto = str(Parameters['Repeat']) + 'c' + 'di' + str(Parameters['DistributionFormat']) + 'dp' + str(Parameters['InitialParameter']) + 's' + str(Parameters['NodeSize']) + 'n' + str(Parameters['ProcessingNumber']) + 'G' + str(Parameters['StaticOrNot']) + 're' + str(Parameters['ReinvestmentParameter']) + '.csv'
+    fileout_crypto = open(filename_crypto, 'w')
+    wrc = csv.writer(fileout_crypto)
+    wrc.writerow(['Cryptocurrency, Accumulated frequency'])
+
+    acc = 0
+    for i in range(len(Crypto_Wealth_list) - 1) :
+        acc += 1
+        if Crypto_Wealth_list[i+1] < Crypto_Wealth_list[i] :
+            wrc.writerow([Crypto_Wealth_list[i], acc])
+
+    acc += 1
+    wrc.writerow([Crypto_Wealth_list[Parameters['NodeSize'] - 1], acc])
+    fileout_crypto.close()
 
 def RandomDisGen(Parameters):
     """Create random number to make specific types of distribution"""
@@ -98,7 +130,7 @@ def RandomExp(Parameters, Exponential_Parameters):
     while (UncheckedChance == 0 or UncheckedChance == 1) :
         UncheckedChance = random.uniform(0,1)
 
-    return (-1 / Exponential_Parameters[Parameters['InitialParameter']]) * log(1 - UncheckedChance)
+    return (-1 / Exponential_Parameters[Parameters['InitialParameter']]) * math.log(1 - UncheckedChance)
 
 def RandomPow(Parameters, Power_Parameters):
     """Create random number that follow Power distribution"""
@@ -106,4 +138,4 @@ def RandomPow(Parameters, Power_Parameters):
     while (UncheckedChance == 0 or UncheckedChance == 1) :
         UncheckedChance = random.uniform(0,1)
 
-    return 1 / pow(1 - UncheckedChance, (1 / Power_Parameters[Parameters['InitialParameter']]))
+    return (1.0 / pow(1 - UncheckedChance, (1.0 / Power_Parameters[Parameters['InitialParameter']])))
