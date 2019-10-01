@@ -12,6 +12,7 @@ def set_parameter(Parameters):
     """Set parameters with system argument values"""
 
     Parameters['Repeat'] = int(sys.argv[1])
+    Parameters['NumCore'] = int(sys.argv[2])
     #Parameters['StaticOrNot'] = int(sys.argv[2])
     #Parameters['DistributionFormat'] = int(sys.argv[3])
     #Parameters['InitialParameter'] = int(sys.argv[4])
@@ -29,17 +30,17 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
         for Dis in range(Parameters['DistributionFormat']) :
             for Ini in range(Parameters['InitialParameter']) :
                 for Growth in range(Parameters['StaticOrNot']) :
-                    for reinv in range(int((Parameters['ReinvestmentParameter']/4))) :
+                    for reinv in range(int((Parameters['ReinvestmentParameter']/Parameters['NumCore']))) :
 
                         copied_dic['Repeat'] = repeat
                         copied_dic['DistributionFormat'] = Dis
                         copied_dic['InitialParameter'] = Ini
                         copied_dic['StaticOrNot'] = Growth
-                        copied_dic['ReinvestmentParameter'] = (reinv * 4)
+                        copied_dic['ReinvestmentParameter'] = (reinv * Parameters['NumCore'])
 
                         Set_List(Hash_list, Crypto_Wealth_list, copied_dic)
                         procs = []
-                        for i in range(4) :
+                        for i in range(Parameters['NumCore']) :
                             proc = Process(target = processing, args = (Hash_list, Crypto_Wealth_list, copied_dic, i,))
                             procs.append(proc)
                             proc.start()
@@ -69,9 +70,9 @@ if __name__ == '__main__':
     #define dictionary for parameters
     Parameters = {'Repeat': 1, 'StaticOrNot': 1,
     'DistributionFormat': 2, 'InitialParameter': 2, 'NodeSize': 100000,
-    'ProcessingNumber': 100000, 'ReinvestmentParameter': 16}
+    'ProcessingNumber': 100000, 'ReinvestmentParameter': 16, 'NumCore':1}
 
-    #set_parameter(Parameters)
+    set_parameter(Parameters)
     print(Parameters)
 
     #define main two variables
