@@ -58,7 +58,7 @@ def processing(Hash_list, Crypto_Wealth_list, copied_dic, index) :
         print('{0}th calculation by process id: {1}'.format(i, pid))
 
     Hash_list.sort(reverse = True)
-    Crypto_Wealth_list(reverse = True)
+    Crypto_Wealth_list.sort(reverse = True)
 
     FilePrint(Hash_list, Crypto_Wealth_list, copied_dic)
 
@@ -78,29 +78,10 @@ if __name__ == '__main__':
     Hash_list = list()
     Crypto_Wealth_list = list()
 
-    #processing_multi(Hash_list, Crypto_Wealth_list, Parameters)
+    processing_multi(Hash_list, Crypto_Wealth_list, Parameters)
 
 
-    starttime = int(time.time())
-    copied_dic = Parameters.copy()
 
-    for repeat in range(Parameters['Repeat']) :
-        for Dis in range(Parameters['DistributionFormat']) :
-            for Ini in range(Parameters['InitialParameter']) :
-                for Growth in range(Parameters['StaticOrNot']) :
-                    for reinv in range((Parameters['ReinvestmentParameter']/4)) :
-
-                        copied_dic['Repeat'] = repeat
-                        copied_dic['DistributionFormat'] = Dis
-                        copied_dic['InitialParameter'] = Ini
-                        copied_dic['StaticOrNot'] = Growth
-                        copied_dic['ReinvestmentParameter'] = (reinv * 4)
-
-                        Set_List(Hash_list, Crypto_Wealth_list, copied_dic)
-                        processing(Hash_list, Crypto_Wealth_list, copied_dic, 0)
-                        endtime = int(time.time())
-                        print("Time: ", (endtime - starttime))
-                        break
 
 
 
