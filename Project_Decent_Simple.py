@@ -29,7 +29,7 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
         for Dis in range(Parameters['DistributionFormat']) :
             for Ini in range(Parameters['InitialParameter']) :
                 for Growth in range(Parameters['StaticOrNot']) :
-                    for reinv in range((Parameters['ReinvestmentParameter']/4)) :
+                    for reinv in range(int((Parameters['ReinvestmentParameter']/4))) :
 
                         copied_dic['Repeat'] = repeat
                         copied_dic['DistributionFormat'] = Dis
