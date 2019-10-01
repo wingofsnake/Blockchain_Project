@@ -47,7 +47,7 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
     """Decide each node reinvest to their hash power and make distribution of wealth"""
     if len(Hash_list) > 1 :
         cost_list = list()
-        reinvestment_ratio_list = [0.0001, 0.001, 0.00125, 0.0025, 0.005, 0.0075,
+        reinvestment_ratio_list = [0.0001, 0.0005, 0.001, 0.00125, 0.0025, 0.005, 0.0075,
             0.00875, 0.01, 0.0125, 0.025, 0.05, 0.075, 0.0875, 0.1, 0.5]
 
         maximum_wealth = 0
