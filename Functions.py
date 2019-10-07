@@ -75,7 +75,6 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
             cost_list[i] = (temp - cost_list[i]) * multi
             Crypto_Wealth_list[i] += cost_list[i]
 
-
 def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
     """Print out CSV file of hash power and crypto-currency"""
 

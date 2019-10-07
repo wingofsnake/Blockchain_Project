@@ -37,8 +37,14 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
                         copied_dic['InitialParameter'] = Ini
                         copied_dic['StaticOrNot'] = Growth
                         copied_dic['ReinvestmentParameter'] = (reinv * Parameters['NumCore'])
+                        print(copied_dic)
+
+                        Hash_list = list()
+                        Crypto_Wealth_list = list()
 
                         Set_List(Hash_list, Crypto_Wealth_list, copied_dic)
+
+
                         procs = []
                         for i in range(Parameters['NumCore']) :
                             proc = Process(target = processing, args = (Hash_list, Crypto_Wealth_list, copied_dic, i,))
@@ -47,15 +53,17 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
 
                         for proc in procs :
                             proc.join()
+                        #sys.exit()
 
 def processing(Hash_list, Crypto_Wealth_list, copied_dic, index) :
 
     copied_dic['ReinvestmentParameter'] = copied_dic['ReinvestmentParameter'] + index
     pid = os.getpid()
-    for i in range(Parameters['ProcessingNumber']) :
+    for i in range(copied_dic['ProcessingNumber']) :
         Mining(Hash_list, Crypto_Wealth_list, copied_dic)
         Investment(Hash_list, Crypto_Wealth_list, copied_dic)
         Reinvestment(Hash_list, Crypto_Wealth_list, copied_dic)
+
         print('{0}th calculation by process id: {1}'.format(i, pid))
 
     Hash_list.sort(reverse = True)
@@ -68,8 +76,8 @@ def processing(Hash_list, Crypto_Wealth_list, copied_dic, index) :
 if __name__ == '__main__':
 
     #define dictionary for parameters
-    Parameters = {'Repeat': 1, 'StaticOrNot': 1,
-    'DistributionFormat': 2, 'InitialParameter': 2, 'NodeSize': 100000,
+    Parameters = {'Repeat': 1, 'StaticOrNot': 2,
+    'DistributionFormat': 3, 'InitialParameter': 3, 'NodeSize': 100000,
     'ProcessingNumber': 100000, 'ReinvestmentParameter': 16, 'NumCore':1}
 
     set_parameter(Parameters)
@@ -80,6 +88,7 @@ if __name__ == '__main__':
     Crypto_Wealth_list = list()
 
     processing_multi(Hash_list, Crypto_Wealth_list, Parameters)
+    print(Parameters['NodeSize'])
 
 
 
