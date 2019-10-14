@@ -15,17 +15,17 @@ def Set_List(Hash_list, Crypto_Wealth_list, Parameters):
         Hash_list += [RandomDisGen(Parameters)]
         Crypto_Wealth_list += [0]
     else :
-        Print("Static or Not parameters should be 0 or 1")
+        print("Static or Not parameters should be 0 or 1")
 
 def Mining(Hash_list, Crypto_Wealth_list, Parameters):
     """Decide which node will success mining, and get reward"""
     total = 0
-    for i in range(Parameters['NodeSize']) :
+    for i in range(len(Hash_list)) :
         total += Hash_list[i]
 
     Success_Possibility = random.uniform(0, total)
     Success_Indicator = 0
-    for i in range(Parameters['NodeSize']) :
+    for i in range(len(Hash_list)) :
         Success_Indicator += Hash_list[i]
         if Success_Indicator >= Success_Possibility:
             Crypto_Wealth_list[i] += 1
@@ -39,7 +39,7 @@ def Investment(Hash_list, Crypto_Wealth_list, Parameters):
                 Hash_list[i] += RandomDisGen(Parameters)
                 break
     elif Parameters['StaticOrNot'] == 1 :
-        if len(Hash_list) < Parameters[NodeSize] :
+        if len(Hash_list) < Parameters['NodeSize'] :
             Hash_list += [RandomDisGen(Parameters)]
             Crypto_Wealth_list += [0]
 
@@ -126,7 +126,7 @@ def RandomDisGen(Parameters):
 def RandomExp(Parameters, Exponential_Parameters):
     """Create random number that follow exp distribution"""
     UncheckedChance = random.uniform(0,1)
-    while (UncheckedChance == 0 or UncheckedChance == 1) :
+    while UncheckedChance == 0 or UncheckedChance == 1:
         UncheckedChance = random.uniform(0,1)
 
     return (-1 / Exponential_Parameters[Parameters['InitialParameter']]) * math.log(1 - UncheckedChance)
@@ -134,7 +134,7 @@ def RandomExp(Parameters, Exponential_Parameters):
 def RandomPow(Parameters, Power_Parameters):
     """Create random number that follow Power distribution"""
     UncheckedChance = random.uniform(0,1)
-    while (UncheckedChance == 0 or UncheckedChance == 1) :
+    while UncheckedChance == 0 or UncheckedChance == 1:
         UncheckedChance = random.uniform(0,1)
 
-    return (1.0 / pow(1 - UncheckedChance, (1.0 / Power_Parameters[Parameters['InitialParameter']])))
+    return 1.0 / pow(1 - UncheckedChance, (1.0 / Power_Parameters[Parameters['InitialParameter']]))

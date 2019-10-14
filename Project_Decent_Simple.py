@@ -1,4 +1,3 @@
-#import section
 import sys
 import os
 import time
@@ -27,15 +26,15 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
     copied_dic = Parameters.copy()
 
     for repeat in range(Parameters['Repeat']) :
-        for Dis in range(Parameters['DistributionFormat']) :
-            for Ini in range(Parameters['InitialParameter']) :
-                for Growth in range(Parameters['StaticOrNot']) :
+        #for Dis in range(Parameters['DistributionFormat']) :
+            #for Ini in range(Parameters['InitialParameter']) :
+                #for Growth in range(Parameters['StaticOrNot']) :
                     for reinv in range(int((Parameters['ReinvestmentParameter']/Parameters['NumCore']))) :
 
                         copied_dic['Repeat'] = repeat
-                        copied_dic['DistributionFormat'] = Dis
-                        copied_dic['InitialParameter'] = Ini
-                        copied_dic['StaticOrNot'] = Growth
+                        copied_dic['DistributionFormat'] = 2
+                        copied_dic['InitialParameter'] = 2
+                        copied_dic['StaticOrNot'] = 1
                         copied_dic['ReinvestmentParameter'] = (reinv * Parameters['NumCore'])
                         print(copied_dic)
 
