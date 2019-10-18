@@ -54,7 +54,11 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
         for i in range(len(Hash_list)) :
             if maximum_wealth < Crypto_Wealth_list[i] :
                 maximum_wealth = Crypto_Wealth_list[i]
-
+        for i in range(len(Hash_list)):
+            Hash_list[i] += reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
+            cost_list += [reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]]
+            Crypto_Wealth_list[i] -= reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
+        """
         reinvestment_chance = 0
         for i in range(len(Hash_list)) :
             reinvestment_chance = random.uniform(0,1)
@@ -64,7 +68,7 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
                 Crypto_Wealth_list[i] -= reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
             else :
                 cost_list += [0]
-        
+        """
         
         temp = 0
         multi = 1.0 / (len(Hash_list) - 1)
