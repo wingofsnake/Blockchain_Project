@@ -4,7 +4,7 @@ import time
 
 from multiprocessing import Process
 
-from Functions import Set_List, Mining, Investment, Reinvestment, FilePrint, redistribution_babo
+from Functions import Set_List, Mining, Investment, Reinvestment, FilePrint_babo, redistribution_babo
 
 #define functions
 def set_parameter(Parameters):
@@ -59,12 +59,12 @@ def processing(Hash_list, Crypto_Wealth_list, copied_dic, index, reinvestment_ra
     copied_dic['ReinvestmentParameter'] = copied_dic['ReinvestmentParameter'] + index
     pid = os.getpid()
     for i in range(copied_dic['ProcessingNumber']) :
-        index = Mining(Hash_list, Crypto_Wealth_list, copied_dic)
+        Miner = Mining(Hash_list, Crypto_Wealth_list, copied_dic)
         Investment(Hash_list, Crypto_Wealth_list, copied_dic)
-        if (copied_dic['ReinvOrRediv'] == 0):
+        if copied_dic['ReinvOrRediv'] == 0:
             Reinvestment(Hash_list, Crypto_Wealth_list, copied_dic, reinvestment_ratio_list)
-        elif (copied_dic['ReinvOrRediv'] == 1):
-            redistribution_babo(Hash_list, Crypto_Wealth_list, index, reinvestment_ratio_list, copied_dic)
+        elif copied_dic['ReinvOrRediv'] == 1:
+            redistribution_babo(Hash_list, Crypto_Wealth_list, Miner, reinvestment_ratio_list, copied_dic)
         if (i % 1000) == 0:
             print('{0}th calculation by process id: {1}'.format(i, pid))
         #print('{0}th calculation by process id: {1}'.format(i, pid))
@@ -72,9 +72,13 @@ def processing(Hash_list, Crypto_Wealth_list, copied_dic, index, reinvestment_ra
     Hash_list.sort(reverse = True)
     Crypto_Wealth_list.sort(reverse = True)
 
-    FilePrint(Hash_list, Crypto_Wealth_list, copied_dic)
+    FilePrint_babo(Hash_list, Crypto_Wealth_list, copied_dic)
 
-    print('Dis = ' + str(copied_dic['DistributionFormat']) + ' Par = ' + str(copied_dic['InitialParameter']) + ' G = ' + str(copied_dic['StaticOrNot']) + ' Reinv  = ' + str(copied_dic['ReinvestmentParameter'] + index))
+    print('Dis = ' + str(copied_dic['DistributionFormat']) + \
+          ' Par = ' + str(copied_dic['InitialParameter']) + \
+          ' G = ' + str(copied_dic['StaticOrNot']) + \
+          ' Reinv  = ' + str(copied_dic['ReinvestmentParameter'] + index) + \
+                             'Reinv or Redis = ' + str(copied_dic['ReinvOrRediv']))
 
 if __name__ == '__main__':
 

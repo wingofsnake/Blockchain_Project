@@ -91,7 +91,13 @@ def redistribution_babo(Hash_list, Crypto_Wealth_list, index, reinvestment_ratio
 def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
     """Print out CSV file of hash power and crypto-currency"""
 
-    filename_hash = str(Parameters['Repeat']) + 'h' + 'di' + str(Parameters['DistributionFormat']) + 'dp' + str(Parameters['InitialParameter']) + 's' + str(Parameters['NodeSize']) + 'n' + str(Parameters['ProcessingNumber']) + 'G' + str(Parameters['StaticOrNot']) + 're' + str(Parameters['ReinvestmentParameter']) + '.csv'
+    filename_hash = str(Parameters['Repeat']) + 'h' + \
+                    'di' + str(Parameters['DistributionFormat']) + \
+                    'dp' + str(Parameters['InitialParameter']) + \
+                    's' + str(Parameters['NodeSize']) + \
+                    'n' + str(Parameters['ProcessingNumber']) + \
+                    'G' + str(Parameters['StaticOrNot']) + \
+                    're' + str(Parameters['ReinvestmentParameter']) + '.csv'
     fileout_hash = open(filename_hash, 'w')
     wrh = csv.writer(fileout_hash)
     wrh.writerow(['Hash', 'Accumulated frequency'])
@@ -106,7 +112,60 @@ def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
     wrh.writerow([Hash_list[Parameters['NodeSize'] - 1], ach])
     fileout_hash.close()
 
-    filename_crypto = str(Parameters['Repeat']) + 'c' + 'di' + str(Parameters['DistributionFormat']) + 'dp' + str(Parameters['InitialParameter']) + 's' + str(Parameters['NodeSize']) + 'n' + str(Parameters['ProcessingNumber']) + 'G' + str(Parameters['StaticOrNot']) + 're' + str(Parameters['ReinvestmentParameter']) + '.csv'
+    filename_crypto = str(Parameters['Repeat']) + 'c' + \
+                      'di' + str(Parameters['DistributionFormat']) + \
+                      'dp' + str(Parameters['InitialParameter']) + \
+                      's' + str(Parameters['NodeSize']) + \
+                      'n' + str(Parameters['ProcessingNumber']) + \
+                      'G' + str(Parameters['StaticOrNot']) + \
+                      're' + str(Parameters['ReinvestmentParameter']) + '.csv'
+    fileout_crypto = open(filename_crypto, 'w')
+    wrc = csv.writer(fileout_crypto)
+    wrc.writerow(['Cryptocurrency, Accumulated frequency'])
+
+    acc = 0
+    for i in range(len(Crypto_Wealth_list) - 1) :
+        acc += 1
+        if Crypto_Wealth_list[i+1] < Crypto_Wealth_list[i] :
+            wrc.writerow([Crypto_Wealth_list[i], acc])
+
+    acc += 1
+    wrc.writerow([Crypto_Wealth_list[Parameters['NodeSize'] - 1], acc])
+    fileout_crypto.close()
+
+def FilePrint_babo(Hash_list, Crypto_Wealth_list, Parameters):
+    """Print out CSV file of hash power and crypto-currency for Babo model"""
+
+    filename_hash = str(Parameters['Repeat']) + 'h' + 'di' + \
+                    str(Parameters['DistributionFormat']) + 'dp'+ \
+                    str(Parameters['InitialParameter']) + 's' + \
+                    str(Parameters['NodeSize']) + 'n' + \
+                    str(Parameters['ProcessingNumber']) + 'G' + \
+                    str(Parameters['StaticOrNot']) + 're' + \
+                    str(Parameters['ReinvestmentParameter'] + 'rd' + \
+                        str(Parameters['ReinvOrRediv'])) + '.csv'
+    fileout_hash = open(filename_hash, 'w')
+    wrh = csv.writer(fileout_hash)
+    wrh.writerow(['Hash', 'Accumulated frequency'])
+
+    ach = 0
+    for i in range(len(Hash_list) - 1) :
+        ach += 1
+        if Hash_list[i+1] < Hash_list[i] :
+            wrh.writerow([Hash_list[i], ach])
+
+    ach += 1
+    wrh.writerow([Hash_list[Parameters['NodeSize'] - 1], ach])
+    fileout_hash.close()
+
+    filename_crypto = str(Parameters['Repeat']) + 'c' + 'di' + \
+                      str(Parameters['DistributionFormat']) + 'dp' + \
+                      str(Parameters['InitialParameter']) + 's' + \
+                      str(Parameters['NodeSize']) + 'n' + \
+                      str(Parameters['ProcessingNumber']) + 'G' + \
+                      str(Parameters['StaticOrNot']) + 're' + \
+                      str(Parameters['ReinvestmentParameter'] + 'rd' + \
+                          str(Parameters['ReinvOrRediv'])) + '.csv'
     fileout_crypto = open(filename_crypto, 'w')
     wrc = csv.writer(fileout_crypto)
     wrc.writerow(['Cryptocurrency, Accumulated frequency'])
