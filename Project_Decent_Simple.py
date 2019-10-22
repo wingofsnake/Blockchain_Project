@@ -19,7 +19,7 @@ def set_parameter(Parameters):
     #Parameters['ProcessingNumber'] = int(sys.argv[6])
     #Parameters['ReinvestmentParameter'] = 16
 
-def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
+def processing_multi(Hash_list, Crypto_Wealth_list, Parameters, reinvestment_ratio_list):
     """Call Set_List function, Mining function, Investment function,
     Reinvestment function, and fileIO function"""
 
@@ -46,7 +46,7 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
 
                         procs = []
                         for i in range(Parameters['NumCore']) :
-                            proc = Process(target = processing, args = (Hash_list, Crypto_Wealth_list, copied_dic, i,))
+                            proc = Process(target = processing, args = (Hash_list, Crypto_Wealth_list, copied_dic, i, reinvestment_ratio_list))
                             procs.append(proc)
                             proc.start()
 
@@ -54,14 +54,14 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters):
                             proc.join()
                         #sys.exit()
 
-def processing(Hash_list, Crypto_Wealth_list, copied_dic, index) :
+def processing(Hash_list, Crypto_Wealth_list, copied_dic, index, reinvestment_ratio_list) :
 
     copied_dic['ReinvestmentParameter'] = copied_dic['ReinvestmentParameter'] + index
     pid = os.getpid()
     for i in range(copied_dic['ProcessingNumber']) :
         Mining(Hash_list, Crypto_Wealth_list, copied_dic)
         Investment(Hash_list, Crypto_Wealth_list, copied_dic)
-        Reinvestment(Hash_list, Crypto_Wealth_list, copied_dic)
+        Reinvestment(Hash_list, Crypto_Wealth_list, copied_dic, reinvestment_ratio_list)
         if (i % 1000) == 0:
             print('{0}th calculation by process id: {1}'.format(i, pid))
         #print('{0}th calculation by process id: {1}'.format(i, pid))
@@ -79,6 +79,8 @@ if __name__ == '__main__':
     Parameters = {'Repeat': 1, 'StaticOrNot': 2,
     'DistributionFormat': 3, 'InitialParameter': 3, 'NodeSize': 100000,
     'ProcessingNumber': 100000, 'ReinvestmentParameter': 16, 'NumCore':1}
+    reinvestment_ratio_list = [0.0001, 0.0005, 0.001, 0.00125, 0.0025, 0.005, 0.0075,
+                               0.00875, 0.01, 0.0125, 0.025, 0.05, 0.075, 0.0875, 0.1, 0.5]
 
     set_parameter(Parameters)
     print(Parameters)
@@ -87,7 +89,7 @@ if __name__ == '__main__':
     Hash_list = list()
     Crypto_Wealth_list = list()
 
-    processing_multi(Hash_list, Crypto_Wealth_list, Parameters)
+    processing_multi(Hash_list, Crypto_Wealth_list, Parameters, reinvestment_ratio_list)
     print(Parameters['NodeSize'])
 
 

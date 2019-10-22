@@ -22,14 +22,16 @@ def Mining(Hash_list, Crypto_Wealth_list, Parameters):
     total = 0
     for i in range(len(Hash_list)) :
         total += Hash_list[i]
-
+    index = 0
     Success_Possibility = random.uniform(0, total)
     Success_Indicator = 0
     for i in range(len(Hash_list)) :
         Success_Indicator += Hash_list[i]
         if Success_Indicator >= Success_Possibility:
-            Crypto_Wealth_list[i] += 1
+            Crypto_Wealth_list[i] += 50
+            index = i
             break
+    return index
 
 def Investment(Hash_list, Crypto_Wealth_list, Parameters):
     """Decide new node enter the system"""
@@ -43,12 +45,10 @@ def Investment(Hash_list, Crypto_Wealth_list, Parameters):
             Hash_list += [RandomDisGen(Parameters)]
             Crypto_Wealth_list += [0]
 
-def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
+def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters, reinvestment_ratio_list):
     """Decide each node reinvest to their hash power and make distribution of wealth"""
     if len(Hash_list) > 1 :
         cost_list = list()
-        reinvestment_ratio_list = [0.0001, 0.0005, 0.001, 0.00125, 0.0025, 0.005, 0.0075,
-            0.00875, 0.01, 0.0125, 0.025, 0.05, 0.075, 0.0875, 0.1, 0.5]
 
         maximum_wealth = 0
         for i in range(len(Hash_list)) :
@@ -68,7 +68,7 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
                 Crypto_Wealth_list[i] -= reinvestment_ratio_list[Parameters['ReinvestmentParameter']] * Crypto_Wealth_list[i]
             else :
                 cost_list += [0]
-        """
+        
         
         temp = 0
         multi = 1.0 / (len(Hash_list) - 1)
@@ -78,6 +78,15 @@ def Reinvestment(Hash_list, Crypto_Wealth_list, Parameters):
         for i in range(len(Hash_list)) :
             cost_list[i] = (temp - cost_list[i]) * multi
             Crypto_Wealth_list[i] += cost_list[i]
+        """
+def redistribution_babo(Hash_list, Crypto_Wealth_list, index, reinvestment_ratio_list, Parameters):
+
+    multi = 50.0 / (len(Hash_list) - 1)
+    for i in range(len(Hash_list)):
+        if i != index:
+            Crypto_Wealth_list[i] += multi * reinvestment_ratio_list[Parameters['ReinvestmentParameter']]
+        else:
+            Crypto_Wealth_list[i] -= multi * reinvestment_ratio_list[Parameters['ReinvestmentParameter']]
 
 def FilePrint(Hash_list, Crypto_Wealth_list, Parameters):
     """Print out CSV file of hash power and crypto-currency"""
@@ -124,6 +133,8 @@ def RandomDisGen(Parameters):
         return RandomExp(Parameters, Exponential_Parameters)
     elif Parameters['DistributionFormat'] == 2 :
         return RandomPow(Parameters, Power_Parameters)
+    elif Parameters['DistributionFormat'] == 3 :
+        return 30
     else :
         print("Distribution Format should be 0 to 2")
 
