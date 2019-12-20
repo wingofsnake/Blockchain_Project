@@ -27,7 +27,7 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters, reinvestment_rat
 
     for repeat in range(Parameters['Repeat']) :
         for Dis in range(Parameters['DistributionFormat']) :
-            for ReinvORRedis in range(Parameters['ReinvOrRediv']) :
+            #for ReinvORRedis in range(Parameters['ReinvOrRediv']) :
                 for Growth in range(Parameters['StaticOrNot']) :
                     for reinv in range(int((Parameters['ReinvestmentParameter']/Parameters['NumCore']))) :
 
@@ -35,7 +35,8 @@ def processing_multi(Hash_list, Crypto_Wealth_list, Parameters, reinvestment_rat
                         copied_dic['DistributionFormat'] = Dis
                         copied_dic['StaticOrNot'] = Growth
                         copied_dic['ReinvestmentParameter'] = (reinv * Parameters['NumCore'])
-                        copied_dic['ReinvOrRediv'] = ReinvORRedis
+                        #copied_dic['ReinvOrRediv'] = ReinvORRedis
+                        copied_dic['ReinvOrRediv'] = 1
                         print(copied_dic)
 
                         Hash_list = list()
@@ -84,8 +85,8 @@ if __name__ == '__main__':
 
     #define dictionary for parameters
     Parameters = {'Repeat': 1, 'StaticOrNot': 2,
-    'DistributionFormat': 4, 'InitialParameter': 3, 'NodeSize': 100000,
-    'ProcessingNumber': 100000, 'ReinvestmentParameter': 16, 'NumCore':1, 'ReinvOrRediv': 1}
+    'DistributionFormat': 4, 'InitialParameter': 2, 'NodeSize': 100000,
+    'ProcessingNumber': 100000, 'ReinvestmentParameter': 8, 'NumCore':1, 'ReinvOrRediv': 2}
     reinvestment_ratio_list = [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5]
 
     set_parameter(Parameters)
